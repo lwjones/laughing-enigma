@@ -8,7 +8,7 @@ let getWorkingHours = function() {
 /**
  * Writes a time block to the screen
  */
-let putTimeBlock = function() {
+let putTimeBlock = function(hour) {
   // create the containing element
   timeBlockEl = $("<div>");
   timeBlockEl.addClass("row col");
@@ -16,6 +16,7 @@ let putTimeBlock = function() {
   // create the time elements
   hourEl = $("<div>");
   hourEl.addClass("hour col-2");
+  hourEl.text(`\n${hour}`);
 
   // create the textarea elements
   textEl = $("<textarea>");
@@ -23,7 +24,7 @@ let putTimeBlock = function() {
 
   // create the save elements
   saveEl = $("<div>");
-  saveEl.addClass("saveBtn col-2");
+  saveEl.addClass("saveBtn col-1 col-sm-2");
   saveEl.append('<span><i class="fas fa-save"></i></span>');
 
   // write the block to the dom
@@ -44,4 +45,6 @@ let getCurrentDay = function() {
 // start when document is completely loaded
 $(document).ready(function() {
   getCurrentDay();
+  putTimeBlock("7PM");
+  putTimeBlock("8PM");
 });
