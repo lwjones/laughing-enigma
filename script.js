@@ -2,6 +2,9 @@ const STARTING_HOUR = 9;  // 9AM
 const ENDING_HOUR = 17;    // 5PM
 
 
+let localStorage = window.localStorage;
+
+
 /**
  * Writes time blocks to the screen from the starting hour to the ending hour.
  */
@@ -60,7 +63,6 @@ let setBlockState = function() {
 
 /**
  * Gets the current date and writes it to the screen.
- * @post Writes the current date to #currentDay
  */
 let getCurrentDay = function() {
   $("#currentDay").text(moment().format("dddd, MMMM Do YYYY"));
@@ -72,9 +74,22 @@ let getCurrentTime = function() {
 }
 
 
+let saveBlockTitle = function(block) {
+  // get information about the block title
+  let blockTitle = $(block).parent().children("textarea").val();
+  let hour = $(block).parent().attr("data-hour");
+
+  // save the time block to localStorage
+  localStorage.setItem(hour, blockTitle);
+}
+
+
 // start when document is completely loaded
 $(document).ready(function() {
   getCurrentDay();
   generateTimeBlocks();
+  $(".saveBtn").click(function() {
+    saveBlockTitle(this);
+  });
   setInterval(setBlockState, 1000);
 });
