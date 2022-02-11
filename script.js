@@ -21,7 +21,7 @@ let generateTimeBlocks = function() {
 let setTimeBlock = function(hour) {
   // create the containing element
   timeBlockEl = $("<div>");
-  timeBlockEl.addClass("row col hour");
+  timeBlockEl.addClass("row col");
 
   // set data element to current hour
   timeBlockEl.attr("data-hour", hour);
@@ -50,12 +50,22 @@ let setTimeBlock = function(hour) {
 let setBlockState = function() {
   // Compare each block to the current hour
   $("#time-table").children().map(function() {
+
     if (parseInt(moment().hour()) === parseInt($(this).attr("data-hour"))) {
-      $("textarea").addClass("present");
+      $(this)
+        .children("textarea")
+        .removeClass("past future")
+        .addClass("present");
     } else if (parseInt(moment().hour()) >= parseInt($(this).attr("data-hour"))) {
-      $("textarea").addClass("past");
+      $(this)
+        .children("textarea")
+        .removeClass("present future")
+        .addClass("past");
     } else {
-      $("textarea").addClass("future");
+      $(this)
+        .children("textarea")
+        .removeClass("past present")
+        .addClass("future");
     }
   });
 };
@@ -72,6 +82,7 @@ let getCurrentDay = function() {
 let getCurrentTime = function() {
   return moment();
 }
+
 
 let loadBlockTitles = function() {
   for (let hour = STARTING_HOUR; hour <= ENDING_HOUR; hour++) {
@@ -101,5 +112,6 @@ $(document).ready(function() {
   $(".saveBtn").click(function() {
     saveBlockTitle(this);
   });
-  setInterval(setBlockState, 1000);
+  setBlockState();
+  setInterval(setBlockState, 3000);
 });
