@@ -73,6 +73,15 @@ let getCurrentTime = function() {
   return moment();
 }
 
+let loadBlockTitles = function() {
+  for (let hour = STARTING_HOUR; hour <= ENDING_HOUR; hour++) {
+    let blockText = localStorage.getItem(hour);
+    if (blockText != null) {
+      $(`[data-hour='${hour}']`).children("textarea").val(blockText);
+    }
+  }
+};
+
 
 let saveBlockTitle = function(block) {
   // get information about the block title
@@ -88,6 +97,7 @@ let saveBlockTitle = function(block) {
 $(document).ready(function() {
   getCurrentDay();
   generateTimeBlocks();
+  loadBlockTitles();
   $(".saveBtn").click(function() {
     saveBlockTitle(this);
   });
