@@ -1,12 +1,10 @@
-const STARTING_HOUR = 9;  // 9AM
+const STARTING_HOUR = 9;   // 9AM
 const ENDING_HOUR = 17;    // 5PM
-
-
 let localStorage = window.localStorage;
 
 
 /**
- * Writes time blocks to the screen from the starting hour to the ending hour.
+ * Writes time blocks to the screen from the starting hour to the ending hour
  */
 let generateTimeBlocks = function() {
   for (let i = STARTING_HOUR; i <= ENDING_HOUR; i++) {
@@ -46,8 +44,11 @@ let setTimeBlock = function(hour) {
 };
 
 
-// Color code time blocks based on their time
+/**
+ * Color code time blocks based on their time
+ */
 let setBlockState = function() {
+
   // Compare each block to the current hour
   $("#time-table").children().map(function() {
 
@@ -79,21 +80,21 @@ let getCurrentDay = function() {
 };
 
 
-let getCurrentTime = function() {
-  return moment();
-}
-
-
+/**
+ * Loads the time block's text for each corresponding hour from local storage
+ */
 let loadBlockTitles = function() {
   for (let hour = STARTING_HOUR; hour <= ENDING_HOUR; hour++) {
     let blockText = localStorage.getItem(hour);
-    if (blockText != null) {
-      $(`[data-hour='${hour}']`).children("textarea").val(blockText);
-    }
+    $(`[data-hour='${hour}']`).children("textarea").val(blockText);
   }
 };
 
 
+/**
+ * Saves the text within a specified time block
+ * @param {element} block - A complete time block element
+ */
 let saveBlockTitle = function(block) {
   // get information about the block title
   let blockTitle = $(block).parent().children("textarea").val();
